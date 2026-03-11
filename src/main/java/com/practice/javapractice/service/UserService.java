@@ -34,21 +34,11 @@ public class UserService {
     }
 
     public User getUserById(Long id) {
-        User user = userRepository.findById(id);
-        logger.info("User found by id: {}", user);
-
-        if (user == null) {
-            throw new UserNotFoundException("User not found with ID: " + id);
-        }
-        return user;
+        return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User not found with ID: " + id));
     }
 
     public User updateUser(Long id, User userDetails) {
-        User existingUser = userRepository.findById(id);
-
-        if (existingUser == null) {
-            throw new UserNotFoundException("Cannot update. User not found with ID: " + id);
-        }
+        User existingUser = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("Cannot update. User not found with ID: " + id));
 
         if (userDetails.getName() != null && !userDetails.getName().isEmpty()) {
             existingUser.setName(userDetails.getName());
@@ -60,11 +50,10 @@ public class UserService {
         return userRepository.save(existingUser);
     }
 
-    public boolean deleteUserById(Long id) {
-        User user = userRepository.findById(id);
-        if (user == null) {
+    public void deleteUserById(Long id) {
+        if(!userRepository.existsById(id)) {
             throw new UserNotFoundException("Cannot delete. User not found with ID: " + id);
         }
-        return userRepository.deleteById(id);
+        userRepository.deleteById(id);
     }
 }
