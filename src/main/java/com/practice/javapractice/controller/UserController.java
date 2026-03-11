@@ -1,6 +1,5 @@
 package com.practice.javapractice.controller;
 
-import com.practice.javapractice.exception.UserNotFoundException;
 import com.practice.javapractice.model.User;
 import com.practice.javapractice.service.UserService;
 import org.springframework.http.HttpStatus;
@@ -32,31 +31,19 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<User> getUserById(@PathVariable Long id) {
-        try{
-            User user = userService.getUserById(id);
-            return ResponseEntity.ok(user);
-        } catch (UserNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        }
+        User user = userService.getUserById(id);
+        return ResponseEntity.ok(user);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User user) {
-        try {
-            User updatedUser = userService.updateUser(id, user);
-            return ResponseEntity.ok(updatedUser);
-        } catch (UserNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        }
+        User updatedUser = userService.updateUser(id, user);
+        return ResponseEntity.ok(updatedUser);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
-        try {
-            userService.deleteUserById(id);
-            return ResponseEntity.noContent().build();
-        } catch (UserNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        }
+        userService.deleteUserById(id);
+        return ResponseEntity.noContent().build();
     }
 }
