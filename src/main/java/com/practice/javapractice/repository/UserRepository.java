@@ -1,6 +1,6 @@
 package com.practice.javapractice.repository;
 
-import com.practice.javapractice.model.Student;
+import com.practice.javapractice.model.User;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -8,30 +8,28 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.yaml.snakeyaml.nodes.Tag.STR;
-
 @Repository
-public class StudentRepository {
+public class UserRepository {
     // In-memory DB
-    private Map<Long, Student> studentDB = new HashMap<>();
+    private Map<Long, User> studentDB = new HashMap<>();
     private Long currentId = 1L;
 
     // Create & Update
-    public Student save(Student student) {
-        if (student.getId() == null) {
-            student.setId(currentId++);
+    public User save(User user) {
+        if (user.getId() == null) {
+            user.setId(currentId++);
         }
-        studentDB.put(student.getId(), student);
-        return student;
+        studentDB.put(user.getId(), user);
+        return user;
     }
 
     // Read all
-    public List<Student> findAll() {
+    public List<User> findAll() {
         return new ArrayList<>(studentDB.values());
     }
 
     // Read by id
-    public Student findById(Long id) {
+    public User findById(Long id) {
         return studentDB.get(id);
     }
 
@@ -45,6 +43,6 @@ public class StudentRepository {
     }
 
     public boolean existsByNameAndDepartment(String name, String department) {
-        return studentDB.values().stream().anyMatch(student -> student.getName().equalsIgnoreCase(name) && student.getDepartment().equalsIgnoreCase(department));
+        return studentDB.values().stream().anyMatch(user -> user.getName().equalsIgnoreCase(name) && user.getDepartment().equalsIgnoreCase(department));
     }
 }

@@ -1,14 +1,14 @@
 package com.practice.javapractice.model;
 
-public class Student {
+public class User {
     private Long id;
     private String name;
     private String department;
 
-    public Student() {
+    public User() {
     }
 
-    public Student(Long id, String name, String department) {
+    public User(Long id, String name, String department) {
         this.id = id;
         this.name = name;
         this.department = department;
